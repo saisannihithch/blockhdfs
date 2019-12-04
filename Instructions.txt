@@ -1,0 +1,42 @@
+Requires Ubuntu Desktop
+1)Install Hadoop
+ Instructions to install: https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
+-----------------------------------------------------------------------------------------------------------------------------------------------
+2)Hyperledger Fabric v1.1, Hyperledger Composer@0.19 and Composer Playground@0.19.
+Instructions to install(execute the following commands one by one in Ubuntu terminal):
+-->cd $HOME
+-->curl -O -k https://hyperledger.github.io/composer/latest/prereqs-ubuntu.sh
+-->chmod u+x prereqs-ubuntu.sh
+-->./prereqs-ubuntu.sh
+****logout of ubuntu machine and log back in********
+-->npm install -g composer-cli@0.19
+-->npm install -g composer-rest-server@0.19
+-->npm install -g generator-hyperledger-composer@0.19
+-->npm install -g yo
+-->npm install -g composer-playground@0.19
+-->mkdir ~/fabric-dev-servers && cd ~/fabric-dev-servers
+-->curl -O https://raw.githubusercontent.com/hyperledger/composer-tools/master/packages/fabric-dev-servers/fabric-dev-servers.tar.gz
+-->tar -xvf fabric-dev-servers.tar.gz
+-->export FABRIC_VERSION=hlfv11
+-->./downloadFabric.sh
+-->./startFabric.sh
+-->./createPeerAdminCard.sh
+------------------------------------------------------------------------------------------------------------------------------------------------
+Enable WebHDFS in Hadoop by adding the following text to the hdfs-site.xml file.
+    <property> 
+    <name>dfs.webhdfs.enabled</name> 
+    <value>true</value> 
+    </property>
+----------------------------------------------------------------------------------------------------------------------------------------------
+The file needed to run the BlockHDFS is inside the script folder. 
+Head to testnetwork/script folder to find the Linux shell scripts.
+Before executing the script the user should change/modify the name of the folder, ports (if changed from default in Hadoop) inside the client/list.js file to the folder where files are uploaded inside hadoop. 
+Run the buildAndDeploy.sh file by executing it using ./buildAndDeploy.sh command in terminal. (If the file file doesnt execute go back to the home folder and execute "chmod u+x -R testnetwork" command)
+---------------------------------------------------------------------------------------------------------------------------------------------- 
+This file will restart the Hadoop, run the Hyperledger Fabric and Composer including REST APIs, and the NodeJs client.  
+The user can run various NodeJs scripts for different folders at the same time. 
+First, the shell script starts the Hadoop Services including NameNode, DataNode, etc. 
+Then, it installs the business network into Hyperledger Fabric where the business network defines how the data is stored and other access controls. 
+After this, it starts the Hyperledger Composer which has a REST API to store data into the blockchain. 
+The client is finally invoked to start the process of getting data from the WebHDFS REST API.
+The script automatically opens the composer playground. You go to test/assets to check the file data. 
