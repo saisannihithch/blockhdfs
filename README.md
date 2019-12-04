@@ -1,3 +1,5 @@
-# testnetwork
+#BLOCKHDFS
 
-blockhdfs
+INTEGRATING BLOCKCHAIN WITH HDFS
+
+READ Instructions.txt file
